@@ -16,4 +16,9 @@ class Group extends Model
         'entireclass',
         'divisiontag',
     ];
+
+    public function lessons()
+    {
+        return $this->belongsToMany(Lesson::class, 'lesson_group', 'group_id', 'lesson_id');
+    }
 }

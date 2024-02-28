@@ -28,7 +28,9 @@ class TimetableController extends Controller
     {
         $classes = Clas::all();
 
-        return view('classes', compact('classes'));
+        $headers = ['Ora', 'Luni', 'Marti', 'Miercuri', 'Joi', 'Vineri'];
+
+        return view('classes', compact('headers','classes'));
     }
 
     public function showClassrooms()
@@ -104,4 +106,5 @@ class TimetableController extends Controller
     public function welcome(){
         return view('welcome');
     }
+
 }

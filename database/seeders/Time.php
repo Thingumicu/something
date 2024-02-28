@@ -24,7 +24,7 @@ class Time extends Seeder
 
     public function run(): void
     {
-        $xml = simplexml_load_string(file_get_contents('C:\Users\radvo\something\asctt2012.xml'));
+        $xml = simplexml_load_string(file_get_contents('C:\licenta\something\time.xml'));
 
         //Teachers
         foreach ($xml->teachers->teacher as $teacher) {
@@ -118,7 +118,7 @@ class Time extends Seeder
                 'divisiontag' => (string)$group['divisiontag'],
             ]);
         }
-        //Lessons
+        //Lessons_Old
         foreach ($xml->lessons->lesson as $lesson) {
             $classids = explode(',',(string)$lesson['classids']);
             $teacherids = explode(',',(string)$lesson['teacherids']);
@@ -135,6 +135,27 @@ class Time extends Seeder
                 'daysdefid' => (string)$lesson['daysdefid'],
             ]);
         }
+//        // Lessons
+//        foreach ($xml->lessons->lesson as $lesson) {
+//            $classids = explode(',', (string)$lesson['classids']);
+//            $teacherids = explode(',', (string)$lesson['teacherids']);
+//            $groupids = explode(',', (string)$lesson['groupids']);
+//
+//            $newLesson = Lesson::create([
+//                'id' => (string)$lesson['id'],
+//                'subjectid' => (string)$lesson['subjectid'],
+//                'periodspercard' => (string)$lesson['periodspercard'],
+//                'periodsperweek' => (string)$lesson['periodsperweek'],
+//                'weeksdefid' => (string)$lesson['weeksdefid'],
+//                'daysdefid' => (string)$lesson['daysdefid'],
+//            ]);
+//
+//            // Attach relationships
+//            $newLesson->classes()->attach($classids);
+//            $newLesson->teachers()->attach($teacherids);
+//            $newLesson->groups()->attach($groupids);
+//        }
+
         //Cards
         foreach ($xml->cards->card as $card) {
             Card::create([

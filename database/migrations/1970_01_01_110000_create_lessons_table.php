@@ -12,24 +12,26 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('lessons', function (Blueprint $table) {
-            $table->string('id')->primary();
-            $table->string('classids')->nullable();
+            $table->string('id')->primary()->nullable();
+            $table->text('classids')->nullable();
             $table->string('subjectid');
             $table->string('periodspercard');
             $table->string('periodsperweek');
-            $table->string('teacherids');
-            $table->string('groupids')->nullable();
+            $table->string('teacherids',255)->nullable();
+            $table->text('groupids')->nullable();
             $table->string('termsdefid')->nullable();
             $table->string('weeksdefid');
             $table->string('daysdefid');
-            $table->foreign('classids')->references('id')->on('classes');
-            $table->foreign('subjectid')->references('id')->on('subjects');
-            $table->foreign('teacherids')->references('id')->on('teachers');
-            //$table->foreign('groupids')->references('divisiontag')->on('groups');
-            $table->foreign('termsdefid')->references('id')->on('termsdefs');
-            $table->foreign('weeksdefid')->references('id')->on('weeksdefs');
-            $table->foreign('daysdefid')->references('id')->on('daysdefs');
             $table->timestamps();
+
+            //$table->foreign('classids')->references('id')->on('classes')->onDelete('cascade');
+            $table->foreign('subjectid')->references('id')->on('subjects')->onDelete('cascade');
+            $table->foreign('teacherids')->references('id')->on('teachers')->onDelete('cascade');
+            //$table->foreign('groupids')->references('id')->on('groups')->onDelete('cascade');
+            $table->foreign('termsdefid')->references('id')->on('termsdefs')->onDelete('cascade');
+            $table->foreign('weeksdefid')->references('id')->on('weeksdefs')->onDelete('cascade');
+            $table->foreign('daysdefid')->references('id')->on('daysdefs')->onDelete('cascade');
+
         });
     }
 

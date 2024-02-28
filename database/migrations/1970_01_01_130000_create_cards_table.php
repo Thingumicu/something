@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('weeks');
             $table->string('terms');
             $table->string('days');
-            $table->foreign('lessonid')->references('id')->on('lessons');
-            $table->foreign('classroomids')->references('name')->on('classrooms');
+            $table->foreign('lessonid')->references('id')->on('lessons')->onDelete('cascade');
+            //$table->foreign('classroomids')->references('name')->on('classrooms')->onDelete('cascade');
             $table->timestamps();
         });
     }

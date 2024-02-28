@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('classid');
             $table->string('entireclass');
-            $table->string('divisiontag');
-            $table->foreign('classid')->references('id')->on('classes');
+            $table->integer('divisiontag');
+            $table->foreign('classid')->references('id')->on('classes')->onDelete('cascade');
             $table->timestamps();
         });
     }
