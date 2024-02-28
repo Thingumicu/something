@@ -16,4 +16,6 @@ class Period extends Model
         'starttime',
         'stoptime',
     ];
+
+
 }

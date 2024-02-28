@@ -15,4 +15,6 @@ class Subject extends Model
         'short',
         'partner_id',
     ];
+
+
 }
