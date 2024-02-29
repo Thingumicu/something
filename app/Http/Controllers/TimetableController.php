@@ -29,15 +29,19 @@ class TimetableController extends Controller
         $classes = Clas::all();
 
         $headers = ['Ora', 'Luni', 'Marti', 'Miercuri', 'Joi', 'Vineri'];
+        $contents = ['[subject]','[subject]','[subject]','[subject]','[subject]'];
 
-        return view('classes', compact('headers','classes'));
+        return view('classes', compact('headers','contents','classes'));
     }
 
     public function showClassrooms()
     {
         $classrooms = Classroom::all();
 
-        return view('classrooms', compact('classrooms'));
+        $headers = ['Ora', 'Luni', 'Marti', 'Miercuri', 'Joi', 'Vineri'];
+        $contents = ['C/L/S','C/L/S','C/L/S','C/L/S','C/L/S'];
+
+        return view('classrooms', compact('headers','contents','classrooms'));
     }
 
     public function showDaysdefs()
@@ -86,7 +90,10 @@ class TimetableController extends Controller
     {
         $teachers = Teacher::all();
 
-        return view('teachers', compact('teachers'));
+        $headers = ['Ora', 'Luni', 'Marti', 'Miercuri', 'Joi', 'Vineri'];
+        $contents = ['C/L/S','C/L/S','C/L/S','C/L/S','C/L/S'];
+
+        return view('teachers', compact('headers','contents','teachers'));
     }
 
     public function showTermsdefs()

@@ -60,16 +60,16 @@
 
             // Start building the table HTML
             let tableHTML = `
-        <table class="min-w-full divide-y divide-gray-200 border border-black-900">
-            <thead>
-                <tr>
-                    @foreach($headers as $header)
-                    <th class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-gray-500 border border-black-900 uppercase tracking-wider">{{ $header }}</th>
-                    @endforeach
-                </tr>
-        </thead>
+            <table class="min-w-full divide-y divide-gray-200 border border-black-900">
+                <thead>
+                    <tr>
+                        @foreach($headers as $header)
+                        <th class="text-center px-6 py-3 bg-gray-50 text-left text-xs font-small text-gray-500 border border-black-900 uppercase tracking-wider">{{ $header }}</th>
+                      @endforeach
+                    </tr>
+                </thead>
 
-                    <tbody>`;
+                <tbody>`;
 
             // Loop from startHour to endHour and generate table rows
             for (let hour = startHour; hour <= endHour; hour++) {
@@ -78,20 +78,18 @@
 
                 // Generate the row with dynamic time slots
                 tableHTML += `
-            <tr>
-                <td class="px-6 py-4 whitespace-nowrap border border-black-900">${timeSlot}</td>
-                <td class="px-6 py-4 whitespace-nowrap border border-black-900">[subject_name]</td>
-                <td class="px-6 py-4 whitespace-nowrap border border-black-900">[subject_name]</td>
-                <td class="px-6 py-4 whitespace-nowrap border border-black-900">[subject_name]</td>
-                <td class="px-6 py-4 whitespace-nowrap border border-black-900">[subject_name]</td>
-                <td class="px-6 py-4 whitespace-nowrap border border-black-900">[subject_name]</td>
-            </tr>`;
+                    <tr>
+                        <td class="px-6 py-4 whitespace-nowrap border border-black-900">${timeSlot}</td>
+                            @foreach($contents as $content)
+                            <th class="text-center px-6 py-3 bg-gray-50 text-left text-xs font-small text-gray-500 border border-black-900 lowercase tracking-wider">{{ $content }}</th>
+                            @endforeach
+                    </tr>`;
             }
 
             // Close the table HTML
             tableHTML += `
-            </tbody>
-        </table>`;
+                </tbody>
+            </table>`;
 
             // Update the scheduleTable's innerHTML with the generated table HTML
             scheduleTable.innerHTML = tableHTML;
