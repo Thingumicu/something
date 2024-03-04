@@ -7,7 +7,7 @@
             <select name="teacher" id="teacher-select" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                 <option value="" disabled selected>Selecteaza un cadru didactic</option>
                 @foreach($teachers as $index => $teacher)
-                    <option value="{{ $teacher['id'] }}" {{ $index == 0 ? 'selected' : '' }}>{{ ltrim($teacher['name'], '_') }}</option>
+                    <option value="{{ $teacher['id'] }}" {{ $index == -1 ? 'selected' : '' }}>{{ ltrim($teacher['name'], '_') }}</option>
                 @endforeach
             </select>
         </div>

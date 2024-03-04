@@ -6,8 +6,8 @@
             <label for="subject-select" class="block text-sm font-medium text-gray-700">Selecteaza o materie</label>
             <select name="subject" id="subject-select" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                 <option value="" disabled selected>Selecteaza o materie</option>
-                @foreach($subjects as $index => $subject)
-                    <option value="{{ $subject['id'] }}" {{ $index == 0 ? 'selected' : '' }}>{{ ltrim($subject['name'], '_') }}</option>
+                @foreach($subjects->sortBy('name') as $index => $subject)
+                    <option value="{{ $subject['id'] }}" {{ $index == -1 ? 'selected' : '' }}>{{ ltrim($subject['name'], '_') }}</option>
                 @endforeach
             </select>
         </div>
@@ -16,8 +16,8 @@
             <x-back-button class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" />
         </div>
 
-        <div class="mt-6">
-            <h3 class="text-lg leading-6 font-medium text-gray-900">Materie: <span id="selected-subject" class="text-indigo-600">N/A</span></h3>
+        <div id="group-header" class="mt-6" style="display:none;">
+            <h3 class="text-lg leading-6 font-medium text-gray-900"><span id="selected-subject" class="text-indigo-600">N/A</span></h3>
         </div>
     </div>
 
@@ -28,7 +28,14 @@
         select.addEventListener('change', function() {
             const selectedIndex = select.selectedIndex;
             const selectedOption = select.options[selectedIndex];
-            selectedSubject.textContent = selectedOption.text;
+            const groupHeader = document.getElementById('group-header');
+
+            if (selectedOption.value) {
+                selectedSubject.textContent = selectedOption.text;
+                groupHeader.style.display = '';
+            } else {
+                groupHeader.style.display = 'none';
+            }
         });
 
         // Display the selected option text

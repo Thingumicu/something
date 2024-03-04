@@ -7,6 +7,7 @@
                 <x-lessons-button />
                 <x-subjects-button />
                 <x-teachers-button />
+                <x-cards-test />
             </div>
         </div>
     </div>

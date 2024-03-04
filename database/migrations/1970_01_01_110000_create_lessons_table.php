@@ -30,7 +30,7 @@ return new class extends Migration
             //$table->foreign('groupids')->references('id')->on('groups')->onDelete('cascade');
             $table->foreign('termsdefid')->references('id')->on('termsdefs')->onDelete('cascade');
             $table->foreign('weeksdefid')->references('id')->on('weeksdefs')->onDelete('cascade');
-            $table->foreign('daysdefid')->references('id')->on('daysdefs')->onDelete('cascade');
+            //$table->foreign('daysdefid')->references('id')->on('daysdefs')->onDelete('cascade');
 
         });
     }

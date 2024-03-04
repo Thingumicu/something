@@ -12,14 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cards', function (Blueprint $table) {
-            $table->string('lessonid')->nullable();
+            $table->string('lessonid');
             $table->string('classroomids')->nullable();
             $table->string('period');
             $table->string('weeks');
             $table->string('terms');
             $table->string('days');
+
+            $table->foreign('days')->references('days')->on('daysdefs')->onDelete('cascade');
+            $table->foreign('period')->references('period')->on('periods')->onDelete('cascade');
             $table->foreign('lessonid')->references('id')->on('lessons')->onDelete('cascade');
-            //$table->foreign('classroomids')->references('name')->on('classrooms')->onDelete('cascade');
+            $table->foreign('classroomids')->references('id')->on('classrooms')->onDelete('cascade');
             $table->timestamps();
         });
     }

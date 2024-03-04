@@ -24,7 +24,7 @@ class Time extends Seeder
 
     public function run(): void
     {
-        $xml = simplexml_load_string(file_get_contents('C:\licenta\something\time.xml'));
+        $xml = simplexml_load_string(file_get_contents('C:\licenta\something\asctt2012 sem 2 2024.xml'));
 
         //Teachers
         foreach ($xml->teachers->teacher as $teacher) {

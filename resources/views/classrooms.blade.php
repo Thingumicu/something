@@ -8,7 +8,7 @@
                     class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                 <option value="" disabled selected>Selecteaza o sala</option>
                 @foreach($classrooms->sortBy('name') as $index => $classroom)
-                    <option value="{{ $classroom['id'] }}">{{ $classroom['name'] }}</option>
+                    <option value="{{ $classroom['id'] }}">{{ $classroom['short'] }}</option>
                 @endforeach
             </select>
         </div>

@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('daysdefs', function (Blueprint $table) {
-            $table->string('id')->primary();
+            $table->string('id');
             $table->string('name')->unique();
             $table->string('short');
-            $table->string('days');
+            $table->string('days')->primary();
             $table->timestamps();
         });
     }
