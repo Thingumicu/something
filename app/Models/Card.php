@@ -33,14 +33,13 @@ class Card extends Model
         return $this->belongsTo(Period::class, 'period');
     }
 
-    public function daysDef()
+    public function day()
     {
-        return $this->belongsTo(Daysdef::class, 'days');
+        return $this->belongsTo(Day::class, 'days');
     }
-
     public function index()
     {
-        $cards = Card::with(['lesson.subject', 'lesson.teacher', 'classroom', 'period', 'daysDef'])->get();
+        $cards = Card::with(['lesson.subject', 'lesson.teacher', 'classroom', 'period', 'day'])->get();
 
         return view('cards', compact('cards'));
     }

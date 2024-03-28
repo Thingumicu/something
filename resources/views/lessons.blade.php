@@ -1,4 +1,4 @@
-@php use App\Models\Clas;use App\Models\Subject;use App\Models\Teacher; @endphp
+@php use App\Models\Day;use App\Models\Clas;use App\Models\Subject;use App\Models\Teacher; @endphp
 <x-app-layout>
     <div class="max-w-4xl mx-auto py-6">
         <h1 class="text-2xl font-semibold text-gray-900">Cursuri</h1>
@@ -12,17 +12,28 @@
                     @php
                         $subject = Subject::find($lesson['subjectid']);
                         $subjectName = $subject ? $subject->name : 'N/A';
-                        $teacherids = Teacher::find($lesson['teacherids']);
-                        $teacherName = $teacherids ? str_replace('_', ' ', $teacherids->name) : 'N/A';
-                        $classids = Clas::find($lesson['classids']);
-                        $className = $classids ? $classids->name : 'N/A';
+
+                        $teacher = Teacher::find($lesson['teacherid']);
+                        $teacherName = $teacher ? str_replace('_', ' ', $teacher->name) : 'N/A';
+
+                        $classids = explode(',', $lesson['classids']);
+                        $classNames = [];
+                        foreach ($classids as $classid) {
+                            $class = Clas::find($classid);
+                            $classNames[] = $class ? $class->name : 'N/A';
+                        }
+                        $classNamesString = implode(', ', $classNames);
+                        $daysdef = Day::find($lesson['daysid']);
+                        $day = $daysdef ? $daysdef -> name : 'N/A';
                     @endphp
-                    @if($className !== 'N/A')
+
+                    @if($classNamesString !== 'N/A')
                         {{-- Only show options where class name is not N/A --}}
                         <option value="{{$lesson['id']}}"
                                 {{$index == -1 ? 'selected' : ''}} data-lesson="{{ $subjectName }}"
-                                data-teacher="{{ $teacherName }}" data-class="{{ $className }}">
-                            {{ $subjectName }} - {{ $teacherName }} - {{ $className }}
+                                data-teacher="{{ $teacherName }}" data-class="{{ $classNamesString }}"
+                                data-day="{{$day}}">
+                            {{ $subjectName }} - {{ $teacherName }} - {{ $classNamesString }} - {{$day}}
                         </option>
                     @endif
                 @endforeach
@@ -42,6 +53,8 @@
             </h2>
             <h2 class="text-lg leading-6 font-medium text-gray-900">Grupa: <span id="selected-class"
                                                                                  class="text-indigo-600">N/A</span></h2>
+            <h2 class="text-lg leading-6 font-medium text-gray-900">Ziua: <span id="selected-day"
+                                                                                class="text-indigo-600">N/A</span></h2>
         </div>
     </div>
 
@@ -50,6 +63,7 @@
         const selectedLesson = document.getElementById('selected-lesson');
         const selectedTeacher = document.getElementById('selected-teacher');
         const selectedClass = document.getElementById('selected-class');
+        const selectedDay = document.getElementById('selected-day');
 
         select.addEventListener('change', function () {
             const selectedIndex = select.selectedIndex;
@@ -60,6 +74,7 @@
                 selectedLesson.textContent = selectedOption.dataset.lesson || 'N/A';
                 selectedTeacher.textContent = selectedOption.dataset.teacher || 'N/A';
                 selectedClass.textContent = selectedOption.dataset.class || 'N/A';
+                selectedDay.textContent = selectedOption.dataset.day || 'N/A';
                 groupHeader.style.display = '';
             } else {
                 groupHeader.style.display = 'none';
@@ -72,6 +87,7 @@
             selectedLesson.textContent = initialData.lesson || 'N/A';
             selectedTeacher.textContent = initialData.teacher || 'N/A';
             selectedClass.textContent = initialData.class || 'N/A';
+            selectedDay.textContent = initialData.day || 'N/A';
         }
     </script>
 </x-app-layout>

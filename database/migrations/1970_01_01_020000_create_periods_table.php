@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('periods', function (Blueprint $table) {
-            $table->string('name');
-            $table->string('short');
+            $table->string('name')->unique();
+            $table->string('short')->unique();
             $table->string('period')->primary();
             $table->string('starttime');
             $table->string('stoptime');

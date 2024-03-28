@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('weeksdefs', function (Blueprint $table) {
-            $table->string('id')->primary();
+        Schema::create('days', function (Blueprint $table) {
+            $table->string('id')->unique();
             $table->string('name')->unique();
-            $table->string('short');
-            $table->string('weeks');
+            $table->string('short')->unique();
+            $table->string('day')->primary();
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('weeksdefs');
+        Schema::dropIfExists('days');
     }
 };

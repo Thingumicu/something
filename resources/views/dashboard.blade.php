@@ -11,7 +11,7 @@
                 @csrf
                 @php
                     $disableButton = collect($tableCounts)->contains(function ($count) {
-                        return $count > 14;
+                        return $count > 16;
                     });
                     $seeded = $seedingStatus->seeded ?? false; // Assuming $seedingStatus is fetched from the database or cache
                 @endphp

@@ -17,8 +17,4 @@ class Teacher extends Model
         'short',
     ];
 
-    public function lessons()
-    {
-        return $this->belongsToMany(Lesson::class, 'lesson_teacher', 'teacher_id', 'lesson_id');
-    }
 }

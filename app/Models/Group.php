@@ -19,6 +19,7 @@ class Group extends Model
 
     public function lessons()
     {
-        return $this->belongsToMany(Lesson::class, 'lesson_group', 'group_id', 'lesson_id');
+        return $this->belongsToMany(Lesson::class, 'group_lesson');
     }
+
 }

@@ -13,24 +13,24 @@ return new class extends Migration
     {
         Schema::create('lessons', function (Blueprint $table) {
             $table->string('id')->primary()->nullable();
-            $table->text('classids')->nullable();
+            $table->text('classids');
             $table->string('subjectid');
             $table->string('periodspercard');
             $table->string('periodsperweek');
-            $table->string('teacherids',255)->nullable();
-            $table->text('groupids')->nullable();
+            $table->string('teacherid');
+            $table->text('groupids');
             $table->string('termsdefid')->nullable();
             $table->string('weeksdefid');
-            $table->string('daysdefid');
+            $table->string('daysid');
             $table->timestamps();
 
             //$table->foreign('classids')->references('id')->on('classes')->onDelete('cascade');
             $table->foreign('subjectid')->references('id')->on('subjects')->onDelete('cascade');
-            $table->foreign('teacherids')->references('id')->on('teachers')->onDelete('cascade');
+            $table->foreign('teacherid')->references('id')->on('teachers')->onDelete('cascade');
             //$table->foreign('groupids')->references('id')->on('groups')->onDelete('cascade');
-            $table->foreign('termsdefid')->references('id')->on('termsdefs')->onDelete('cascade');
-            $table->foreign('weeksdefid')->references('id')->on('weeksdefs')->onDelete('cascade');
-            //$table->foreign('daysdefid')->references('id')->on('daysdefs')->onDelete('cascade');
+            $table->foreign('termsdefid')->references('id')->on('terms')->onDelete('cascade');
+            $table->foreign('weeksdefid')->references('id')->on('weeks')->onDelete('cascade');
+            $table->foreign('daysid')->references('id')->on('days')->onDelete('cascade');
 
         });
     }

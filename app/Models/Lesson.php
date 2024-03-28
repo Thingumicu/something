@@ -15,7 +15,7 @@ class Lesson extends Model
         'subjectid',
         'periodspercard',
         'periodsperweek',
-        'teacherids',
+        'teacherid',
         'groupids',
         'termsdefid',
         'weeksdefid',

@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Termsdef extends Model
+class Day extends Model
 {
-    protected $table='termsdefs';
+    protected $table='days';
 
     protected $fillable = [
         'id',
         'name',
         'short',
-        'terms',
+        'day',
     ];
 }

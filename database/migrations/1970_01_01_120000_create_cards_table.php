@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cards', function (Blueprint $table) {
+            $table->id();
             $table->string('lessonid');
             $table->string('classroomids')->nullable();
             $table->string('period');
@@ -19,7 +20,9 @@ return new class extends Migration
             $table->string('terms');
             $table->string('days');
 
-            $table->foreign('days')->references('days')->on('daysdefs')->onDelete('cascade');
+            $table->foreign('days')->references('day')->on('days')->onDelete('cascade');
+            $table->foreign('weeks')->references('weeks')->on('weeks')->onDelete('cascade');
+            $table->foreign('terms')->references('terms')->on('terms')->onDelete('cascade');
             $table->foreign('period')->references('period')->on('periods')->onDelete('cascade');
             $table->foreign('lessonid')->references('id')->on('lessons')->onDelete('cascade');
             $table->foreign('classroomids')->references('id')->on('classrooms')->onDelete('cascade');

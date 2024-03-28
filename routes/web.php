@@ -28,6 +28,7 @@ Route::get('/subjects', [TimetableController::class, 'showSubjects'])->name('sub
 Route::get('/teachers', [TimetableController::class, 'showTeachers'])->name('teachers');
 Route::get('/lessons', [TimetableController::class, 'showLessons'])->name('lessons');
 Route::get('/cards', [TimetableController::class, 'showCards'])->name('cards');
+Route::get('/test',[TimetableController::class,'test'])->name('test');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

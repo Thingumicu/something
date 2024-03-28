@@ -5,15 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Card;
 use App\Models\Clas;
 use App\Models\Classroom;
-use App\Models\Daysdef;
+use App\Models\Day;
 use App\Models\Grade;
 use App\Models\Group;
 use App\Models\Lesson;
 use App\Models\Period;
 use App\Models\Subject;
 use App\Models\Teacher;
-use App\Models\Termsdef;
-use App\Models\Weeksdef;
+use App\Models\Term;
+use App\Models\Week;
 
 class TimetableController extends Controller
 {
@@ -46,7 +46,7 @@ class TimetableController extends Controller
 
     public function showDaysdefs()
     {
-        $daysdefs = Daysdef::all();
+        $daysdefs = Day::all();
 
         return view('daysdefs', compact('daysdefs'));
     }
@@ -98,20 +98,24 @@ class TimetableController extends Controller
 
     public function showTermsdefs()
     {
-        $termsdefs = Termsdef::all();
+        $termsdefs = Term::all();
 
         return view('termsdefs', compact('termsdefs'));
     }
 
     public function showWeeksdefs()
     {
-        $weeksdefs = Weeksdef::all();
+        $weeksdefs = Week::all();
 
         return view('weeksdefs', compact('weeksdefs'));
     }
 
     public function welcome(){
         return view('welcome');
+    }
+
+    public function test(){
+        return view('test');
     }
 
 }

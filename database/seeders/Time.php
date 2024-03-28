@@ -5,15 +5,15 @@ namespace Database\Seeders;
 use App\Models\Card;
 use App\Models\Clas;
 use App\Models\Classroom;
-use App\Models\Daysdef;
+use App\Models\Day;
 use App\Models\Grade;
 use App\Models\Group;
 use App\Models\Lesson;
 use App\Models\Period;
 use App\Models\Subject;
 use App\Models\Teacher;
-use App\Models\Termsdef;
-use App\Models\Weeksdef;
+use App\Models\Term;
+use App\Models\Week;
 use Illuminate\Database\Seeder;
 
 class Time extends Seeder
@@ -56,7 +56,7 @@ class Time extends Seeder
         }
         //Terms
         foreach ($xml->termsdefs->termsdef as $term) {
-            Termsdef::create([
+            Term::create([
                 'id' => (string)$term['id'],
                 'name' => (string)$term['name'],
                 'short' => (string)$term['short'],
@@ -65,16 +65,16 @@ class Time extends Seeder
         }
         //Days
         foreach ($xml->daysdefs->daysdef as $daysdef) {
-            Daysdef::create([
+            Day::create([
                 'id' => (string)$daysdef['id'],
                 'name' => (string)$daysdef['name'],
                 'short' => (string)$daysdef['short'],
-                'days' => (string)$daysdef['days'],
+                'day' => (string)$daysdef['days'],
             ]);
         }
         //Weeks
         foreach ($xml->weeksdefs->weeksdef as $weeksdef) {
-            Weeksdef::create([
+            Week::create([
                 'id' => (string)$weeksdef['id'],
                 'name' => (string)$weeksdef['name'],
                 'short' => (string)$weeksdef['short'],
@@ -118,44 +118,22 @@ class Time extends Seeder
                 'divisiontag' => (string)$group['divisiontag'],
             ]);
         }
-        //Lessons_Old
+        //Lessons
         foreach ($xml->lessons->lesson as $lesson) {
-            $classids = explode(',',(string)$lesson['classids']);
-            $teacherids = explode(',',(string)$lesson['teacherids']);
-            $groupids = explode(',',(string)$lesson['groupids']);
+            $classids = explode(',', (string)$lesson['classids']);
+            $groupids = explode(',', (string)$lesson['groupids']);
             Lesson::create([
                 'id' => (string)$lesson['id'],
-                'classids' => implode(',',$classids),
+                'classids' => implode(',', $classids),
                 'subjectid' => (string)$lesson['subjectid'],
                 'periodspercard' => (string)$lesson['periodspercard'],
                 'periodsperweek' => (string)$lesson['periodsperweek'],
-                'teacherids' => implode(',',$teacherids),
-                'groupids' => implode(',',$groupids),
+                'teacherid' => (string)$lesson['teacherids'],
+                'groupids' => implode(',', $groupids),
                 'weeksdefid' => (string)$lesson['weeksdefid'],
-                'daysdefid' => (string)$lesson['daysdefid'],
+                'daysid' => (string)$lesson['daysdefid'],
             ]);
         }
-//        // Lessons
-//        foreach ($xml->lessons->lesson as $lesson) {
-//            $classids = explode(',', (string)$lesson['classids']);
-//            $teacherids = explode(',', (string)$lesson['teacherids']);
-//            $groupids = explode(',', (string)$lesson['groupids']);
-//
-//            $newLesson = Lesson::create([
-//                'id' => (string)$lesson['id'],
-//                'subjectid' => (string)$lesson['subjectid'],
-//                'periodspercard' => (string)$lesson['periodspercard'],
-//                'periodsperweek' => (string)$lesson['periodsperweek'],
-//                'weeksdefid' => (string)$lesson['weeksdefid'],
-//                'daysdefid' => (string)$lesson['daysdefid'],
-//            ]);
-//
-//            // Attach relationships
-//            $newLesson->classes()->attach($classids);
-//            $newLesson->teachers()->attach($teacherids);
-//            $newLesson->groups()->attach($groupids);
-//        }
-
         //Cards
         foreach ($xml->cards->card as $card) {
             Card::create([

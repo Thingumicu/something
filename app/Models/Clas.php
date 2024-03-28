@@ -16,9 +16,11 @@ class Clas extends Model
         'partner_id',
     ];
 
-    public function lessons(){
-        return $this->belongsToMany(Lesson::class,'class_lesson','class_id','lesson_id');
+    public function lessons()
+    {
+        return $this->belongsToMany(Lesson::class, 'class_lesson');
     }
+
 
 
 }

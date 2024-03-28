@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Weeksdef extends Model
+class Week extends Model
 {
-    protected $table='weeksdefs';
+    protected $table='weeks';
 
     protected $fillable = [
         'id',

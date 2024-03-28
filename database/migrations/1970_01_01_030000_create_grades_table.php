@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('grades', function (Blueprint $table) {
-            $table->string('name');
-            $table->string('short');
+            $table->string('name')->unique();
+            $table->string('short')->unique();
             $table->string('grade')->primary();
             $table->timestamps();
         });
