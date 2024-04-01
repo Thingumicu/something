@@ -20,10 +20,34 @@
                         $classroom = $card->classroom->short ?? 'No Classroom';//sala
 
                         $period = $card->period ?? 'No Period';//ora
-                        $dayMapping = [
 
-]
-                        $day = $card->days ?? 'No Day';//ziua
+                        $dayMapping = [
+                            '00001' => 'Luni',
+                            '00010' => 'Marti',
+                            '00100' => 'Miercuri',
+                            '01000' => 'Joi',
+                            '10000' => 'Vineri',
+                        ];
+                        $day = $dayMapping[$card->days] ?? 'No Day';//ziua
+
+                        $periodMapping = [
+                            '1' => '08:00 - 08:50',
+                            '2' => '09:00 - 09:50',
+                            '3' => '10:00 - 10:50',
+                            '4' => '11:00 - 11:50',
+                            '5' => '12:00 - 12:50',
+                            '6' => '13:00 - 13:50',
+                            '7' => 'Pauza', // Pause between 14:00 and 15:00
+                            '8' => '15:00 - 15:50',
+                            '9' => '16:00 - 16:50',
+                            '10' => '17:00 - 17:50',
+                            '11' => '18:00 - 18:50',
+                            '12' => '19:00 - 19:50',
+                            '13' => '20:00 - 20:50',
+                            '14' => '21:00 - 21:50',
+                        ];
+
+                        $period = $periodMapping[$card->period] ?? 'No Period';
 
                         $optionText = "{$subject} - {$teacher} - {$classroom} - {$period} - {$day}";
                     @endphp
@@ -75,9 +99,9 @@
                 selectedClassroom.textContent = selectedOption.dataset.classroom || 'N/A';
                 selectedPeriod.textContent = selectedOption.dataset.period || 'N/A';
                 selectedDay.textContent = selectedOption.dataset.day || 'N/A';
-                groupHeader.style.display='';
-            } else{
-                groupHeader.style.display='none';
+                groupHeader.style.display = '';
+            } else {
+                groupHeader.style.display = 'none';
             }
         });
 
