@@ -21,6 +21,11 @@ class Clas extends Model
         return $this->belongsToMany(Lesson::class, 'class_lesson');
     }
 
+    public function index()
+    {
+        $cards = Card::with(['lesson.subject', 'lesson.teacher', 'classroom', 'period', 'day'])->get();
 
+        return view('classes', compact('cards'));
+    }
 
 }

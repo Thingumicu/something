@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\CardController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\TimetableController;
 use Illuminate\Support\Facades\Route;

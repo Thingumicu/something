@@ -1,21 +1,175 @@
 @php
-    use App\Models\Lesson;
+    use App\Models\Clas;
 @endphp
 <x-app-layout>
     <div class="max-w-4xl mx-auto py-6">
-        <h1 class="text-2xl font-semibold text-gray-900">Intrari</h1>
-        <div class="mt-4">
+        <h1 class="text-2xl font-semibold text-gray-900">Orar</h1>
+        <div class="mt-4" hidden>
             <label for="card-select" class="block mt-4 text-sm font-medium text-gray-700">Selecteaza o intrare</label>
-            <select name="card" id="card-select"
+            <select name="card" id="card-select" disabled
                     class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
                 <option value="" disabled selected>Selecteaza o intrare</option>
-                @foreach($cards as $index => $card)
+            </select>
+        </div>
+
+        <div class="mt-4">
+            <label for="search" class="block text-sm font-medium text-gray-700">Cauta:</label>
+            <input type="text" id="search" name="search"
+                   class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        </div>
+
+        <div class="mt-4">
+            <x-back-button
+                    class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"/>
+        </div>
+
+        <div>
+            <h2 class="text-lg font-semibold mb-2">Materii</h2>
+            <div class="relative">
+                <select onchange="filterTable(this.value)"
+                        class="block w-full py-2 px-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="" selected>Selecteaza o materie</option>
+                    @foreach($cards->unique('lesson.subject.name') as $card)
+                        <option value="{{ $card->lesson->subject->name }}">{{ $card->lesson->subject->name }}</option>
+                    @endforeach
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <h2 class="text-lg font-semibold my-2">Cadre didactice</h2>
+            <div class="relative">
+                <select onchange="filterTable(this.value)"
+                        class="block w-full py-2 px-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="" selected>Selecteaza un cadru didactic</option>
+                    @foreach($cards->unique('lesson.teacher.name') as $card)
+                        <option
+                                value="{{ ltrim($card->lesson->teacher->name, "_") }}">{{ ltrim($card->lesson->teacher->name, "_") }}</option>
+                    @endforeach
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+
+        <div>
+            <h2 class="text-lg font-semibold my-2">Sali de curs</h2>
+            <div class="relative">
+                <select onchange="filterTable(this.value)"
+                        class="block w-full py-2 px-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                    <option value="" selected>Selecteaza o sala de curs</option>
+                    @foreach($cards->unique('classroom.name') as $card)
+                        <option value="{{ $card->classroom->name }}">{{ $card->classroom->name }}</option>
+                    @endforeach
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+
+        {{--        <div>--}}
+        {{--            <h2 class="text-lg font-semibold my-2">Grupe</h2>--}}
+        {{--            <div class="relative">--}}
+        {{--                <select onchange="filterTable(this.value)" class="block w-full py-2 px-4 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">--}}
+        {{--                    <option value="" selected>Selecteaza o grupa</option>--}}
+        {{--                    @foreach($classes as $class)--}}
+        {{--                        <option value="{{ $class->name }}">{{ $class->name }}</option>--}}
+        {{--                    @endforeach--}}
+        {{--                </select>--}}
+        {{--                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">--}}
+        {{--                    <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">--}}
+        {{--                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>--}}
+        {{--                    </svg>--}}
+        {{--                </div>--}}
+        {{--            </div>--}}
+    </div>
+
+
+    <div class="mt-4">
+        <div class="w-full flex justify-center">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                <tr>
+                    <th scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Curs
+                    </th>
+                    <th scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Profesor
+                    </th>
+                    <th scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Semigrupa
+                    </th>
+                    <th scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Sala
+                    </th>
+                    <th scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Ora
+                    </th>
+                    <th scope="col"
+                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                        Ziua
+                    </th>
+                </tr>
+                </thead>
+                <tbody id="selected-data">
+                @foreach($cards->sortBy('lesson.days') as $index => $card)
                     @php
                         $lesson = $card->lesson;//curs
 
                         $subject = $lesson->subject->name ?? 'No Subject';//curs -> materie
 
                         $teacher = ltrim($lesson->teacher->name, '_') ?? 'No Teacher';//curs -> nume profesor
+
+                        // Fetching class names for each class ID
+                        $classIds = explode(',', $lesson->classids);
+                        $classNames = [];
+                        $prefixes = []; // To store unique prefixes
+
+                        foreach ($classIds as $classId) {
+                            $class = Clas::find($classId);
+                            if ($class) {
+                                // Extract the prefix before the slash
+                                $prefix = strtok($class->name, '/');
+
+                                // Store unique prefixes
+                                if (!isset($prefixes[$prefix])) {
+                                    $prefixes[$prefix] = [];
+                                }
+
+                                $prefixes[$prefix][] = $class->name;
+                            }
+                        }
+
+                        $class = '';
+                        foreach ($prefixes as $prefix => $classes) {
+                            if (count($classes) > 1) {
+                                // If there are multiple classes with the same prefix, clump them together
+                                $class .= $prefix . ', ';
+                            } else {
+                                // Otherwise, include the individual class
+                                $class .= implode(', ', $classes) . ', ';
+                            }
+                        }
+
+                        $class = rtrim($class, ', '); // Remove trailing comma and space
 
                         $classroom = $card->classroom->short ?? 'No Classroom';//sala
 
@@ -37,7 +191,7 @@
                             '4' => '11:00 - 11:50',
                             '5' => '12:00 - 12:50',
                             '6' => '13:00 - 13:50',
-                            '7' => 'Pauza', // Pause between 14:00 and 15:00
+                            '7' => '14:00 - 14:50',
                             '8' => '15:00 - 15:50',
                             '9' => '16:00 - 16:50',
                             '10' => '17:00 - 17:50',
@@ -47,72 +201,71 @@
                             '14' => '21:00 - 21:50',
                         ];
 
+                        // Determine the prefix based on the condition
+        $prefix = strpos($class, '/') === false ? 'CURS' : 'LAB';
+        $subject = $prefix . ' ' . ($lesson->subject->name ?? 'No Subject');
+
                         $period = $periodMapping[$card->period] ?? 'No Period';
-
-                        $optionText = "{$subject} - {$teacher} - {$classroom} - {$period} - {$day}";
                     @endphp
-                    <option value="{{ $card->id }}" data-subject="{{ $subject }}" data-teacher="{{ $teacher }}"
-                            data-classroom="{{ $classroom }}" data-period="{{ $period }}"
-                            data-day="{{ $day }}">{{ $optionText }}</option>
+                    <tr class="bg-white">
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {{ $subject }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {{ $teacher }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {{ $class }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {{ $classroom }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {{ $period }}
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {{ $day }}
+                        </td>
+                    </tr>
                 @endforeach
-            </select>
-        </div>
-        <div class="mt-4">
-            <x-back-button
-                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"/>
-        </div>
-
-        <div id="group-header" style="display: none;" class="mt-4">
-            <h2 class="text-lg leading-6 font-medium text-gray-900">Subject: <span id="selected-lesson-subject"
-                                                                                   class="text-indigo-600">N/A</span>
-            </h2>
-            <h2 class="text-lg leading-6 font-medium text-gray-900">Teacher: <span id="selected-lesson-teacher"
-                                                                                   class="text-indigo-600">N/A</span>
-            </h2>
-            <h2 class="text-lg leading-6 font-medium text-gray-900">Classroom: <span id="selected-classroom"
-                                                                                     class="text-indigo-600">N/A</span>
-            </h2>
-            <h2 class="text-lg leading-6 font-medium text-gray-900">Period: <span id="selected-period"
-                                                                                  class="text-indigo-600">N/A</span>
-            </h2>
-            <h2 class="text-lg leading-6 font-medium text-gray-900">Day: <span id="selected-day"
-                                                                               class="text-indigo-600">N/A</span></h2>
+                </tbody>
+            </table>
         </div>
     </div>
-
+    </div>
     <script>
-        const select = document.getElementById('card-select');
-        const selectedLessonSubject = document.getElementById('selected-lesson-subject');
-        const selectedLessonTeacher = document.getElementById('selected-lesson-teacher');
-        const selectedClassroom = document.getElementById('selected-classroom');
-        const selectedPeriod = document.getElementById('selected-period');
-        const selectedDay = document.getElementById('selected-day');
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('search');
+            const rows = document.querySelectorAll('#selected-data tr');
 
-        select.addEventListener('change', function () {
-            const selectedIndex = select.selectedIndex;
-            const selectedOption = select.options[selectedIndex];
-            const groupHeader = document.getElementById('group-header');
+            searchInput.addEventListener('input', function () {
+                const searchTerms = this.value.trim().toLowerCase().split(/\s+/);
 
-            if (selectedOption.value) {
-                selectedLessonSubject.textContent = selectedOption.dataset.subject || 'N/A';
-                selectedLessonTeacher.textContent = selectedOption.dataset.teacher || 'N/A';
-                selectedClassroom.textContent = selectedOption.dataset.classroom || 'N/A';
-                selectedPeriod.textContent = selectedOption.dataset.period || 'N/A';
-                selectedDay.textContent = selectedOption.dataset.day || 'N/A';
-                groupHeader.style.display = '';
-            } else {
-                groupHeader.style.display = 'none';
-            }
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    let found = false;
+
+                    cells.forEach(cell => {
+                        const textContent = cell.textContent.trim().toLowerCase();
+                        if (searchTerms.every(term => textContent.includes(term))) {
+                            found = true;
+                        }
+                    });
+
+                    if (found) {
+                        row.style.display = '';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            });
         });
 
-        // Initialize with the first option's data if available
-        if (select.options.length > 1 && select.options[0].dataset) {
-            const initialData = select.options[0].dataset;
-            selectedLessonSubject.textContent = initialData.subject || 'N/A';
-            selectedLessonTeacher.textContent = initialData.teacher || 'N/A';
-            selectedClassroom.textContent = initialData.classroom || 'N/A';
-            selectedPeriod.textContent = initialData.period || 'N/A';
-            selectedDay.textContent = initialData.day || 'N/A';
+        function filterTable(value) {
+            const searchInput = document.getElementById('search');
+            searchInput.value = value;
+            searchInput.dispatchEvent(new Event('input'));
         }
     </script>
+
 </x-app-layout>
